@@ -1,0 +1,350 @@
+[
+    {
+        "definitions" : [
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 31,
+                "name" : "ExpNegativeLogLikelihood(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@ExpNegativeLogLikelihood#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 41,
+                "name" : "GradExpNegativeLogLikelihood(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@GradExpNegativeLogLikelihood#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 69,
+                "name" : "GammaNegativeLogLikelihood(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@GammaNegativeLogLikelihood#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 75,
+                "name" : "GradGammaNegativeLogLikelihood(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@GradGammaNegativeLogLikelihood#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 83,
+                "name" : "prox_L1(const Eigen::VectorXd &, double)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@prox_L1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#d#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 88,
+                "name" : "regularizer_L1(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@regularizer_L1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 93,
+                "name" : "regularizer_ENet(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@regularizer_ENet#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 99,
+                "name" : "ObjFun(const Eigen::VectorXd &, double)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@ObjFun#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#d#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 105,
+                "name" : "SmoothObjFun(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@SmoothObjFun#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 115,
+                "name" : "GradSmoothObjFun(const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@GradSmoothObjFun#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 127,
+                "name" : "ProxGradDescent(double)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@ProxGradDescent#d#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 201,
+                "name" : "Predict(const Eigen::MatrixXd &, const Eigen::VectorXd &)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@Predict#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 209,
+                "name" : "get_predictor_matrix",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@get_predictor_matrix#"
+            },
+            {
+                "column" : 28,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 213,
+                "name" : "get_response_vector",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@get_response_vector#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 217,
+                "name" : "get_alpha",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@get_alpha#"
+            },
+            {
+                "column" : 16,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 221,
+                "name" : "get_glm_type",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@get_glm_type#"
+            },
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 234,
+                "name" : "set_alpha(double)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@set_alpha#d#"
+            },
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+                "kind" : 7,
+                "line" : 238,
+                "name" : "set_glm_type(int)",
+                "parent_name" : "GlmNetCpp",
+                "usr" : "c:@C@GlmNetCpp@F@set_glm_type#I#"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.cpp",
+        "file_last_write" : 1503285702
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 7,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.h",
+                "kind" : 2,
+                "line" : 20,
+                "name" : "GlmNetCpp",
+                "parent_name" : "",
+                "usr" : "c:@C@GlmNetCpp"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCpp.h",
+        "file_last_write" : 1503278165
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 30,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.cpp",
+                "kind" : 7,
+                "line" : 43,
+                "name" : "FitGlmFixed",
+                "parent_name" : "GlmNetCvCpp",
+                "usr" : "c:@C@GlmNetCvCpp@F@FitGlmFixed#"
+            },
+            {
+                "column" : 30,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.cpp",
+                "kind" : 7,
+                "line" : 49,
+                "name" : "GenerateLambdaGrid",
+                "parent_name" : "GlmNetCvCpp",
+                "usr" : "c:@C@GlmNetCvCpp@F@GenerateLambdaGrid#"
+            },
+            {
+                "column" : 30,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.cpp",
+                "kind" : 7,
+                "line" : 57,
+                "name" : "FitGlmCv",
+                "parent_name" : "GlmNetCvCpp",
+                "usr" : "c:@C@GlmNetCvCpp@F@FitGlmCv#"
+            },
+            {
+                "column" : 21,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.cpp",
+                "kind" : 7,
+                "line" : 137,
+                "name" : "ComputeLambdaMax",
+                "parent_name" : "GlmNetCvCpp",
+                "usr" : "c:@C@GlmNetCvCpp@F@ComputeLambdaMax#"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.cpp",
+        "file_last_write" : 1501746988
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 7,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.h",
+                "kind" : 2,
+                "line" : 23,
+                "name" : "GlmNetCvCpp",
+                "parent_name" : "",
+                "usr" : "c:@C@GlmNetCvCpp"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.h",
+        "file_last_write" : 1503287131
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.cpp",
+                "kind" : 7,
+                "line" : 7,
+                "name" : "add(double, double)",
+                "parent_name" : "MyClass",
+                "usr" : "c:@C@MyClass@F@add#d#d#"
+            },
+            {
+                "column" : 19,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.cpp",
+                "kind" : 7,
+                "line" : 13,
+                "name" : "scMlt(double, const MatrixXd &)",
+                "parent_name" : "MyClass",
+                "usr" : "c:@C@MyClass@F@scMlt#d#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.cpp",
+        "file_last_write" : 1502516624
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 7,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.h",
+                "kind" : 2,
+                "line" : 7,
+                "name" : "MyClass",
+                "parent_name" : "",
+                "usr" : "c:@C@MyClass"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.h",
+        "file_last_write" : 1502516407
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 38,
+                "name" : "scalarMultiplication(double, const Eigen::Map<Eigen::MatrixXd> &)",
+                "parent_name" : "",
+                "usr" : "c:@F@scalarMultiplication#d#&1$@N@Eigen@C@Map>#$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#VI0#$@N@Eigen@C@Stride>#VI0#VI0#"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 45,
+                "name" : "addReals(double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@addReals#d#d#"
+            },
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 53,
+                "name" : "fitGlmFixed(const Eigen::MatrixXd &, const Eigen::VectorXd &, double, int, int, int, double, double, bool, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@fitGlmFixed#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#d#I#I#I#d#d#b#I#"
+            },
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 69,
+                "name" : "fitGlmCv(const Eigen::MatrixXd &, const Eigen::VectorXd &, double, int, int, int, double, double, bool, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@fitGlmCv#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#d#I#I#I#d#d#b#I#"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 85,
+                "name" : "ExpNegativeLogLikelihood_cpp(const Eigen::VectorXd &, const Eigen::MatrixXd &, const Eigen::VectorXd &, double, int, int, int, double, double, bool, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@ExpNegativeLogLikelihood_cpp#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#S0_#d#I#I#I#d#d#b#I#"
+            },
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 102,
+                "name" : "GradExpNegativeLogLikelihood_cpp(const Eigen::VectorXd &, const Eigen::MatrixXd &, const Eigen::VectorXd &, double, int, int, int, double, double, bool, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@GradExpNegativeLogLikelihood_cpp#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#S0_#d#I#I#I#d#d#b#I#"
+            },
+            {
+                "column" : 17,
+                "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+                "kind" : 6,
+                "line" : 119,
+                "name" : "ProxGradDescent_cpp(const Eigen::MatrixXd &, const Eigen::VectorXd &, double, double, int, int, double, double, bool, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@ProxGradDescent_cpp#&1$@N@Eigen@C@Matrix>#d#VI-1#VI-1#VI0#VI-1#VI-1#&1$@N@Eigen@C@Matrix>#d#VI-1#VI1#VI0#VI-1#VI1#d#d#I#I#d#d#b#I#"
+            }
+        ],
+        "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+        "file_last_write" : 1503287159
+    }
+]
