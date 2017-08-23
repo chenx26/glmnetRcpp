@@ -9,5 +9,5 @@ libary(devtools)
 install_github("chenx26/glmnetRcpp")
 
 # Examples
-See the example file in the example folder.
+See the example file in the tests folder.
 
