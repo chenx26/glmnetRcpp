@@ -3,7 +3,9 @@ This is an efficient Rcpp implementation of the glmnet model for exponentially d
 
 # INSTALLATION
 Sys.setenv( "PKG_CXXFLAGS"="-std=c++14" )
+
 libary(devtools)
+
 install_github("chenx26/glmnetRcpp")
 
 # Examples
