@@ -41,6 +41,16 @@ Eigen::MatrixXd scalarMultiplication(double c, const Eigen::Map<Eigen::MatrixXd>
 
 }
 
+
+//' add two real numbers
+//'
+//' This function takes two real numbers and returns their sum
+//'
+//' @param x a real number
+//' @param y a real number
+//' @export
+//' @return the sume of x and y
+
 // [[Rcpp::export]]
 double addReals(double x, double y) {
   MyClass mc;

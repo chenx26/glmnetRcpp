@@ -11,6 +11,15 @@ ExpNegativeLogLikelihood = function(x, params) {
 
 # gradient of the negative log likelihood of exponential distribution
 
+#' Title
+#'
+#' @param x
+#' @param params
+#'
+#' @return
+#' @export
+#'
+#' @examples
 GradExpNegativeLogLikelihood = function(x, params) {
         tmp = -t(params[["A"]]) %*% (exp(-params[["A"]] %*% x) * params[["b"]] - 1)
         return(tmp)

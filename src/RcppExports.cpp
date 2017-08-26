@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // scalarMultiplication
 Eigen::MatrixXd scalarMultiplication(double c, const Eigen::Map<Eigen::MatrixXd>& M);
-RcppExport SEXP glmnetRcpp_scalarMultiplication(SEXP cSEXP, SEXP MSEXP) {
+RcppExport SEXP _glmnetRcpp_scalarMultiplication(SEXP cSEXP, SEXP MSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // addReals
 double addReals(double x, double y);
-RcppExport SEXP glmnetRcpp_addReals(SEXP xSEXP, SEXP ySEXP) {
+RcppExport SEXP _glmnetRcpp_addReals(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,7 +32,7 @@ END_RCPP
 }
 // fitGlmFixed
 Eigen::MatrixXd fitGlmFixed(const Eigen::MatrixXd& predictor_matrix, const Eigen::VectorXd& response_vector, double alpha, int num_lambda, int glm_type, int max_iter, double abs_tol, double rel_tol, bool normalize_grad, int k_fold);
-RcppExport SEXP glmnetRcpp_fitGlmFixed(SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
+RcppExport SEXP _glmnetRcpp_fitGlmFixed(SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -52,7 +52,7 @@ END_RCPP
 }
 // fitGlmCv
 Eigen::MatrixXd fitGlmCv(const Eigen::MatrixXd& predictor_matrix, const Eigen::VectorXd& response_vector, double alpha, int num_lambda, int glm_type, int max_iter, double abs_tol, double rel_tol, bool normalize_grad, int k_fold);
-RcppExport SEXP glmnetRcpp_fitGlmCv(SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
+RcppExport SEXP _glmnetRcpp_fitGlmCv(SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -72,7 +72,7 @@ END_RCPP
 }
 // ExpNegativeLogLikelihood_cpp
 double ExpNegativeLogLikelihood_cpp(const Eigen::VectorXd& x, const Eigen::MatrixXd& predictor_matrix, const Eigen::VectorXd& response_vector, double alpha, int num_lambda, int glm_type, int max_iter, double abs_tol, double rel_tol, bool normalize_grad, int k_fold);
-RcppExport SEXP glmnetRcpp_ExpNegativeLogLikelihood_cpp(SEXP xSEXP, SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
+RcppExport SEXP _glmnetRcpp_ExpNegativeLogLikelihood_cpp(SEXP xSEXP, SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -93,7 +93,7 @@ END_RCPP
 }
 // GradExpNegativeLogLikelihood_cpp
 Eigen::VectorXd GradExpNegativeLogLikelihood_cpp(const Eigen::VectorXd& x, const Eigen::MatrixXd& predictor_matrix, const Eigen::VectorXd& response_vector, double alpha, int num_lambda, int glm_type, int max_iter, double abs_tol, double rel_tol, bool normalize_grad, int k_fold);
-RcppExport SEXP glmnetRcpp_GradExpNegativeLogLikelihood_cpp(SEXP xSEXP, SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
+RcppExport SEXP _glmnetRcpp_GradExpNegativeLogLikelihood_cpp(SEXP xSEXP, SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP alphaSEXP, SEXP num_lambdaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -114,7 +114,7 @@ END_RCPP
 }
 // ProxGradDescent_cpp
 Eigen::VectorXd ProxGradDescent_cpp(const Eigen::MatrixXd& predictor_matrix, const Eigen::VectorXd& response_vector, double lambda, double alpha, int glm_type, int max_iter, double abs_tol, double rel_tol, bool normalize_grad, int k_fold);
-RcppExport SEXP glmnetRcpp_ProxGradDescent_cpp(SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
+RcppExport SEXP _glmnetRcpp_ProxGradDescent_cpp(SEXP predictor_matrixSEXP, SEXP response_vectorSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP glm_typeSEXP, SEXP max_iterSEXP, SEXP abs_tolSEXP, SEXP rel_tolSEXP, SEXP normalize_gradSEXP, SEXP k_foldSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -134,13 +134,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"glmnetRcpp_scalarMultiplication", (DL_FUNC) &glmnetRcpp_scalarMultiplication, 2},
-    {"glmnetRcpp_addReals", (DL_FUNC) &glmnetRcpp_addReals, 2},
-    {"glmnetRcpp_fitGlmFixed", (DL_FUNC) &glmnetRcpp_fitGlmFixed, 10},
-    {"glmnetRcpp_fitGlmCv", (DL_FUNC) &glmnetRcpp_fitGlmCv, 10},
-    {"glmnetRcpp_ExpNegativeLogLikelihood_cpp", (DL_FUNC) &glmnetRcpp_ExpNegativeLogLikelihood_cpp, 11},
-    {"glmnetRcpp_GradExpNegativeLogLikelihood_cpp", (DL_FUNC) &glmnetRcpp_GradExpNegativeLogLikelihood_cpp, 11},
-    {"glmnetRcpp_ProxGradDescent_cpp", (DL_FUNC) &glmnetRcpp_ProxGradDescent_cpp, 10},
+    {"_glmnetRcpp_scalarMultiplication", (DL_FUNC) &_glmnetRcpp_scalarMultiplication, 2},
+    {"_glmnetRcpp_addReals", (DL_FUNC) &_glmnetRcpp_addReals, 2},
+    {"_glmnetRcpp_fitGlmFixed", (DL_FUNC) &_glmnetRcpp_fitGlmFixed, 10},
+    {"_glmnetRcpp_fitGlmCv", (DL_FUNC) &_glmnetRcpp_fitGlmCv, 10},
+    {"_glmnetRcpp_ExpNegativeLogLikelihood_cpp", (DL_FUNC) &_glmnetRcpp_ExpNegativeLogLikelihood_cpp, 11},
+    {"_glmnetRcpp_GradExpNegativeLogLikelihood_cpp", (DL_FUNC) &_glmnetRcpp_GradExpNegativeLogLikelihood_cpp, 11},
+    {"_glmnetRcpp_ProxGradDescent_cpp", (DL_FUNC) &_glmnetRcpp_ProxGradDescent_cpp, 10},
     {NULL, NULL, 0}
 };
 
