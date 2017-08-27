@@ -613,7 +613,7 @@ nvars = 7
 
 \begin_layout Plain Layout
 
-ntests = 10
+ntests = 1000 # takes a while to run h2o
 \end_layout
 
 \begin_layout Plain Layout
