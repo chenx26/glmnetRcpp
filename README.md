@@ -8,6 +8,6 @@ libary(devtools)
 
 install_github("chenx26/glmnetRcpp")
 
-# Examples
-See the example file in the tests folder.
+# Vignette
+See the Vignette folder for timings and accuracy
 
