@@ -1,0 +1,1127 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass extarticle
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1cm
+\topmargin 1cm
+\rightmargin 1cm
+\bottommargin 1cm
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+GlmNet for Exponential Response Variables via RcppEigen
+\end_layout
+
+\begin_layout Author
+Xin Chen, Doug Martin, Aleksandr Aravkin, Dan Hanson
+\end_layout
+
+\begin_layout Abstract
+This package implements the Generalized Linear Model with Elastic Net regulariza
+tion for Exponential Response Variables (GLM-EN-EXP).
+ This package is intended to fill the current gap in the R software ecosystem
+ where an implementation that 1) supports exponential distribution, 2) supports
+ Elastic Net model selection, 3) is easy to parallelize on multicore machine,
+ does not exist, to the best knowledge of the authors.
+ Significant speed improvement has been shown compared with both native
+ R and H2O implementations in simple benchmark tets.
+\end_layout
+
+\begin_layout Section
+Theoretical Background
+\end_layout
+
+\begin_layout Subsection
+Generalized Linear Models For Exponential Distributions
+\end_layout
+
+\begin_layout Standard
+The theory and methodology of generalized linear models (GLM's) is well
+ established for independent observations 
+\begin_inset Formula $Y_{1},Y_{2},\cdots,Y_{N}$
+\end_inset
+
+ whose mean values are 
+\begin_inset Formula $\mu_{1},\mu_{2},\cdots,\mu_{N}$
+\end_inset
+
+ and whose distributions are members of the 
+\emph on
+exponential families
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f(y_{k};\theta_{k})=\exp\left\{ (y_{k}\theta_{k}-b(\theta_{k}))/a(\phi_{k})+c(y_{k},\phi_{k})\right\} \quad k=1,2,\cdots,N
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+along with a link function 
+\begin_inset Formula $g$
+\end_inset
+
+ from the 
+\begin_inset Formula $\mu_{k}$
+\end_inset
+
+to a linear model form 
+\begin_inset Formula $\boldsymbol{x}_{k}^{\prime}\boldsymbol{\beta}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+g(\mu_{k})=\boldsymbol{x}_{k}^{\prime}\boldsymbol{\beta}=\eta_{k}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The form stated above with 
+\begin_inset Formula $y_{k}$
+\end_inset
+
+ in the first term in the exponent rather than some function 
+\begin_inset Formula $a(y_{k})$
+\end_inset
+
+ is called the 
+\emph on
+canonical
+\emph default
+ form, and 
+\begin_inset Formula $\theta_{k}$
+\end_inset
+
+ is called the 
+\emph on
+natural
+\emph default
+ 
+\emph on
+parameter
+\emph default
+.
+ See for example McCullagh and Nelder (1989) and Fox (2016)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Other authors use slightly different but equivalent mathemtatical forms
+ of an exponential family, e.g., see Dobson(2002)
+\end_layout
+
+\end_inset
+
+, where one finds simple derivations of the following expressions for the
+ mean and variance of the observations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mu_{k}=E(Y_{k})=b'(\theta_{k})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+var(Y_{k})=b^{\prime\prime}(\theta_{k})a(\phi_{k}).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Maximum Likelihood Model Estimation for GLM
+\end_layout
+
+\begin_layout Standard
+The likelihood function for observed values 
+\begin_inset Formula $y_{1},y_{2},\cdots,y_{N}$
+\end_inset
+
+ of the independt set 
+\begin_inset Formula $Y_{1},Y_{2},\cdots,Y_{N}$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+L(\boldsymbol{y};\boldsymbol{\theta})=\prod_{k=1}^{N}f(y_{k};\theta_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the log-likelihood function is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+l(\boldsymbol{y};\boldsymbol{\theta})=\log\prod_{k=1}^{N}f(y_{k};\theta_{k})=\sum_{k=1}^{N}\log f(y_{k};\theta_{k})=\sum_{k=1}^{N}l(y_{k};\theta_{k}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The classic GLM model is usually fitted using a method called iterative
+ reweighted least squares (IRWLS) method.
+\end_layout
+
+\begin_layout Subsection
+GLM with Elastic Net Regularization
+\end_layout
+
+\begin_layout Standard
+One problem with the standard GLM formulation is that it does not have regulariz
+ation penalty for overfitting.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The elastic net regularization not only addresses the porblem of choosing
+ the degree of the polynomial, but it also shrinks the coefficients so the
+ fitted model do not have wild behaviors.
+ The AIC only chooses the degree of the polynomial, but does not control
+ the absolute value of the fitted coefficients.
+ To use AIC, we need to do ridge regression for the possible polynomials.
+\end_layout
+
+\end_inset
+
+ More Regularization usually comes in the form of augmenting the original
+ cost function (such as the log-likelihood function) with a penalty term
+ that expresses the modeler's belief about the properties of the model.
+ For example, in ridge regulariaztion, the sume of least square errors is
+ augmented by the L2 norm of the coefficients
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{\beta}_{Ridge}=\underset{\boldsymbol{\beta},\lambda}{\mathrm{argmin}}LL(\boldsymbol{y};\boldsymbol{\theta})+\lambda\|\boldsymbol{\beta}\|_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This implies that the modeler believes there is unlikely to be particularly
+ large coeffcients in the model.
+ In deed, large coefficients will be penalized heavily by the L2 regularization,
+ resulting in smaller values for the coefficients.
+ 
+\end_layout
+
+\begin_layout Standard
+A different kind of regularization, which became very popular in recent
+ years, is called least absolute shrinkage and selection operator (LASSO).
+ The idea is similar to that of ridge regression, except that instead of
+ the believing the coefficients should not be too large, the modeler believes
+ the model should be sparse with respect to the variables.
+ This is achieved by augmenting the MSE with L1 norm of the coefficients.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{\beta}_{LASSO}=\underset{\boldsymbol{\beta},\lambda}{\mathrm{argmin}}LL(\boldsymbol{y};\boldsymbol{\theta})+\lambda\|\boldsymbol{\beta}\|_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The sparsity of 
+\begin_inset Formula $\hat{\beta}_{LASSO}$
+\end_inset
+
+ is controlled by adjusting the value of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+.
+ One thing to note is that even thought 
+\begin_inset Formula $\hat{\beta}_{LASSO}$
+\end_inset
+
+ tends to be sparse, it could very well have large coefficients, which may
+ or may not be desirable.
+\end_layout
+
+\begin_layout Standard
+The latest development in regularization comes in the form of Elastic Net
+ (EN).
+ It combines Ridge Regression and LASSO regression by using weighted sum
+ of L1 nrom and L2 norm of the coeffcients as the penalty function.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{\beta}_{EN}=\underset{\boldsymbol{\beta},\lambda}{\mathrm{argmin}}LL(\boldsymbol{y};\boldsymbol{\theta})+\lambda(\alpha\|\boldsymbol{\beta}\|_{1}+(1-\alpha)\|\boldsymbol{\beta}\|_{2})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The the parameter 
+\begin_inset Formula $\alpha\in[0,1]$
+\end_inset
+
+ expresses our belief about the relative importance of sparsity and coefficient
+ value.
+\end_layout
+
+\begin_layout Subsection
+GLM-EN via Proximal Gradient Descent
+\end_layout
+
+\begin_layout Standard
+The proximal gradident descent algorithm is designed to solve problems of
+ the form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\min_{x}\quad f(x)+g(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ are closed proper convex and 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ is differentiable.
+ The proximal gradient method is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x^{k+1}=\mathrm{prox}_{t^{k}g}(x^{k}-\nabla f(x))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{prox}_{tg}(v)=\min_{x}\quad f(x)+\dfrac{1}{2t}||x-v||_{2}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For our problem, 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ would be the sum negative log-likelihood of the exponential response variables
+ and the L2 regularization and 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ would be the L1 regularization.
+ Therefore, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\mathrm{prox}_{tg}(v)=\mathrm{prox}_{t||x||_{1}}(v) & =\mathrm{argmin}_{x}\left(||x||_{1}+\dfrac{1}{2t}||x-v||_{2}^{2}\right)\\
+ & =\begin{cases}
+v_{i}-t & v_{i}\geq t\\
+v_{i}+t & v_{i}\leq-t\\
+0 & |v_{i}|\leq t
+\end{cases}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Sample Code
+\end_layout
+
+\begin_layout Subsection
+Installation
+\end_layout
+
+\begin_layout Standard
+To install the package, run the following code in R.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Sys.setenv( "PKG_CXXFLAGS"="-std=c++14" )
+\end_layout
+
+\begin_layout Plain Layout
+
+libary(devtools)
+\end_layout
+
+\begin_layout Plain Layout
+
+install_github("chenx26/glmnetRcpp")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Sample Code for Timings and Results Comparison between glmnetRcpp and H2O
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Code 2_1, tidy=FALSE, eval = TRUE, echo = TRUE, message=F, warning=F,
+ results = 'hide'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+rm(list = ls())
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+######### load package
+\end_layout
+
+\begin_layout Plain Layout
+
+library(glmnetRcpp)
+\end_layout
+
+\begin_layout Plain Layout
+
+library(h2o)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+######### helper function
+\end_layout
+
+\begin_layout Plain Layout
+
+compute_mean_vector = function(data_list){
+\end_layout
+
+\begin_layout Plain Layout
+
+  tmp_mat = matrix(unlist(data_list), nrow = length(data_list[[1]]))
+\end_layout
+
+\begin_layout Plain Layout
+
+  apply(tmp_mat, 1, mean)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+######### set parameters
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(20170827)
+\end_layout
+
+\begin_layout Plain Layout
+
+nobs = 50
+\end_layout
+
+\begin_layout Plain Layout
+
+nvars = 7
+\end_layout
+
+\begin_layout Plain Layout
+
+ntests = 10
+\end_layout
+
+\begin_layout Plain Layout
+
+alpha = 0.5
+\end_layout
+
+\begin_layout Plain Layout
+
+lasso.lambda = 0.1
+\end_layout
+
+\begin_layout Plain Layout
+
+x.true = rnorm(nvars)
+\end_layout
+
+\begin_layout Plain Layout
+
+x.true[sample(2:nvars, floor(nvars / 2) - 1)] = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+######## generate test data
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+params_list = list()
+\end_layout
+
+\begin_layout Plain Layout
+
+for(j in 1:ntests){
+\end_layout
+
+\begin_layout Plain Layout
+
+  ## random normal matrix A
+\end_layout
+
+\begin_layout Plain Layout
+
+  A = matrix(rnorm(nvars * nobs), ncol = nvars)
+\end_layout
+
+\begin_layout Plain Layout
+
+  exp.lambdas = exp(-A %*% x.true)
+\end_layout
+
+\begin_layout Plain Layout
+
+  b = sapply(exp.lambdas, function(x) rexp(1, x))
+\end_layout
+
+\begin_layout Plain Layout
+
+params_list[[j]] = list(
+\end_layout
+
+\begin_layout Plain Layout
+
+  b = b,
+\end_layout
+
+\begin_layout Plain Layout
+
+  # The response variables
+\end_layout
+
+\begin_layout Plain Layout
+
+  A = A,
+\end_layout
+
+\begin_layout Plain Layout
+
+  # The matrix
+\end_layout
+
+\begin_layout Plain Layout
+
+  alpha = alpha,
+\end_layout
+
+\begin_layout Plain Layout
+
+  # 1 means lasso
+\end_layout
+
+\begin_layout Plain Layout
+
+  lambda = lasso.lambda
+\end_layout
+
+\begin_layout Plain Layout
+
+) # the regularization coefficient
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#### try doing things parallel using foreach
+\end_layout
+
+\begin_layout Plain Layout
+
+#### note that h2o.glm does not work with foreach
+\end_layout
+
+\begin_layout Plain Layout
+
+library(doParallel)
+\end_layout
+
+\begin_layout Plain Layout
+
+library(foreach)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+h2o.init()
+\end_layout
+
+\begin_layout Plain Layout
+
+h2o_time_single = system.time({h2o_single_res_list = lapply(params_list,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     function(dat){
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       b = dat[["b"]]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       A = dat[["A"]]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       alpha = dat[["alpha"]]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       x.h2o.df = as.h2o(data.frame(
+b, A))
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       predictors = colnames(x.h2
+o.df)[-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       response = colnames(x.h2o.d
+f)[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       my.glm.lasso = h2o.glm(
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         x = predictors,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         y = response,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         family = 'gamma',
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         intercept = FALSE,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         training_frame
+ = x.h2o.df,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         ignore_const_cols
+ = TRUE,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         link = "log",
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         #        lambda
+ = enet_lambda,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         lambda_search =
+ TRUE,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         alpha = alpha,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                         standardize = FALSE
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       )
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                       return(my.glm.lasso@model$c
+oefficients[-1])
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+h2o.shutdown(FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+cl <- makeCluster(3)
+\end_layout
+
+\begin_layout Plain Layout
+
+registerDoParallel(cl)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+time_single = system.time({cpp_single_res_list = foreach(i = 1:length(params_list
+),
+\end_layout
+
+\begin_layout Plain Layout
+
+                                            .packages = 'glmnetRcpp') %do%
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+                                              x = params_list[[i]]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                              glmnet_exp(x[["A"]], x[["b"]],
+ x[["alpha"]])
+\end_layout
+
+\begin_layout Plain Layout
+
+                                            }
+\end_layout
+
+\begin_layout Plain Layout
+
+})
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+time_multi = system.time({cpp_multi_res_list = foreach(i = 1:length(params_list),
+\end_layout
+
+\begin_layout Plain Layout
+
+                                            .packages = 'glmnetRcpp') %dopar%
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+                                              x = params_list[[i]]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                              glmnet_exp(x[["A"]], x[["b"]],
+ x[["alpha"]])
+\end_layout
+
+\begin_layout Plain Layout
+
+                                            }
+\end_layout
+
+\begin_layout Plain Layout
+
+})
+\end_layout
+
+\begin_layout Plain Layout
+
+stopCluster(cl)
+\end_layout
+
+\begin_layout Plain Layout
+
+res_cpp_single = compute_mean_vector(cpp_single_res_list)
+\end_layout
+
+\begin_layout Plain Layout
+
+res_cpp_multi = compute_mean_vector(cpp_multi_res_list)
+\end_layout
+
+\begin_layout Plain Layout
+
+res_h2o_single = compute_mean_vector(h2o_single_res_list)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Code 2_2, tidy=FALSE, eval = TRUE, echo = TRUE, message=F, warning=F,
+ results = 'show'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+### timings
+\end_layout
+
+\begin_layout Plain Layout
+
+data.frame(cpp_time_single = time_single[3],
+\end_layout
+
+\begin_layout Plain Layout
+
+           cpp_time_multi = time_multi[3],
+\end_layout
+
+\begin_layout Plain Layout
+
+           h2o_time_single = h2o_time_single[3])
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Code 2_3, tidy=FALSE, eval = TRUE, echo = TRUE, message=F, warning=F,
+ results = 'show'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+### fitted coefficients
+\end_layout
+
+\begin_layout Plain Layout
+
+data.frame(x.true = x.true,
+\end_layout
+
+\begin_layout Plain Layout
+
+           x.single = res_cpp_single,
+\end_layout
+
+\begin_layout Plain Layout
+
+           x.multi = res_cpp_multi,
+\end_layout
+
+\begin_layout Plain Layout
+
+           x.h2o = res_h2o_single)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

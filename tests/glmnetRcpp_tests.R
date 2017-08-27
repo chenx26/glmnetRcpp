@@ -602,7 +602,6 @@ library(doParallel)
 library(foreach)
 cl <- makeCluster(3)
 registerDoParallel(cl)
-foreach(i=1:3) %dopar% sqrt(i)
 
 
 system.time({cpp_foreach_res_list = foreach(i = 1:length(params_list),
