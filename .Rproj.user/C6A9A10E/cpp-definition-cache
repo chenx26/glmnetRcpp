@@ -345,6 +345,10 @@
             }
         ],
         "file" : "/Users/cathyliu/MyCode/glmnetRcpp/src/glmnetRcppInterface.cpp",
+<<<<<<< HEAD
         "file_last_write" : 1503773439
+=======
+        "file_last_write" : 1503778656
+>>>>>>> add_glmnet_exp_doc
     }
 ]

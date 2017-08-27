@@ -1,6 +1,14 @@
 /Users/cathyliu/MyCode/GlmNetExpPGD_R/vanilla_prox_descent_search_lambda_cv.R="DE11F662"
+<<<<<<< HEAD
 /Users/cathyliu/MyCode/glmnetRcpp/R/RcppExports.R="EA810EA"
 /Users/cathyliu/MyCode/glmnetRcpp/R/zzz.R="DCA8E68E"
+=======
+/Users/cathyliu/MyCode/glmnetRcpp/DESCRIPTION="5FB8F8E"
+/Users/cathyliu/MyCode/glmnetRcpp/NAMESPACE="EFBAD2BC"
+/Users/cathyliu/MyCode/glmnetRcpp/R/RcppExports.R="8D15E607"
+/Users/cathyliu/MyCode/glmnetRcpp/R/glmnet_exp.R="EBE2281A"
+/Users/cathyliu/MyCode/glmnetRcpp/man/glmnet_exp.Rd="7ECB7091"
+>>>>>>> add_glmnet_exp_doc
 /Users/cathyliu/MyCode/glmnetRcpp/src/GlmNetCvCpp.h="65BC2866"
 /Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.cpp="7F390B35"
 /Users/cathyliu/MyCode/glmnetRcpp/src/MyClass.h="83B5382F"

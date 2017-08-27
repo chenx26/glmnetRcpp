@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "path" : "~/MyCode/glmnetRcpp",
+=======
+    "path" : "~/MyCode/glmnetRcpp/R",
+>>>>>>> add_glmnet_exp_doc
     "sortOrder" : [
         {
             "ascending" : true,

@@ -357,6 +357,7 @@ min(fit.pgd.search.cv$rmse)
 fit.pgd.search.cv$best.x
 fit.pgd.search.cv$best.idx
 x.true
+glmnet_exp(A, b, alpha = alpha)
 
 #
 # ### use bfgs

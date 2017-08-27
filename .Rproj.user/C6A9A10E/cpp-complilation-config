@@ -11,7 +11,11 @@
         "-I/opt/X11/include",
         "-fPIC"
     ],
+<<<<<<< HEAD
     "hash" : "1503779600",
+=======
+    "hash" : "1503778656",
+>>>>>>> add_glmnet_exp_doc
     "is_cpp" : true,
     "pch" : "Rcpp"
 }
