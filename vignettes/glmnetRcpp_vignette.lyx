@@ -708,7 +708,7 @@ nvars = 7
 
 \begin_layout Plain Layout
 
-ntests = 1000 # takes a while to run h2o
+ntests = 100 # takes a while to run h2o
 \end_layout
 
 \begin_layout Plain Layout
@@ -1206,6 +1206,539 @@ data.frame(x.true = x.true,
 \begin_layout Plain Layout
 
            x.h2o = res_h2o_single)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Testing glmnetRcpp for estimating the standard errors of sample mean
+\end_layout
+
+\begin_layout Standard
+The following code chunk tests using glmnetRcpp to estimate the standard
+ error of sample for IID normal data.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Code 2_4, tidy=FALSE, eval = TRUE, echo = TRUE, message=F, warning=F,
+ results = 'hide'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+rm(list=ls())
+\end_layout
+
+\begin_layout Plain Layout
+
+library(glmnetRcpp)
+\end_layout
+
+\begin_layout Plain Layout
+
+library(EstimatorStandardError)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#' Influence Function of Mean
+\end_layout
+
+\begin_layout Plain Layout
+
+#'
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @param data Vector of the data
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @param ...
+ other parameters
+\end_layout
+
+\begin_layout Plain Layout
+
+#'
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @return IF of Mean
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @export
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @author Xin Chen, 
+\backslash
+email{chenx26@uw.edu}
+\end_layout
+
+\begin_layout Plain Layout
+
+#'
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @examples
+\end_layout
+
+\begin_layout Plain Layout
+
+#' mu.IF(rnorm(10))
+\end_layout
+
+\begin_layout Plain Layout
+
+mu.IF=function(data,...){
+\end_layout
+
+\begin_layout Plain Layout
+
+        mu.hat=mean(data)
+\end_layout
+
+\begin_layout Plain Layout
+
+        return(data-mu.hat)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#' Compute the standard error of the mean of the data using glmnet_exp
+\end_layout
+
+\begin_layout Plain Layout
+
+#'
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @param data vector of data
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @param d degree of polynomial
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @param alpha weight for Elastic Net regularizer
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @param keep what portion of sample spectral density to use for model
+ fitting
+\end_layout
+
+\begin_layout Plain Layout
+
+#'
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @return variance of the mean of the data
+\end_layout
+
+\begin_layout Plain Layout
+
+#' @export
+\end_layout
+
+\begin_layout Plain Layout
+
+#'
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+SE.glmnet_exp=function(data, d=7, alpha=0.5, keep=1){
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        N=length(data)
+\end_layout
+
+\begin_layout Plain Layout
+
+        # Step 1: compute the periodograms 
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.periodogram=myperiodogram(data)
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.freq=my.periodogram$freq
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.periodogram=my.periodogram$spec
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # remove values of frequency 0 as it does not contain information
+ about the variance
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.freq=my.freq[-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.periodogram=my.periodogram[-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # implement cut-off
+\end_layout
+
+\begin_layout Plain Layout
+
+        nfreq=length(my.freq)
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.freq=my.freq[1:floor(nfreq*keep)]
+\end_layout
+
+\begin_layout Plain Layout
+
+        my.periodogram=my.periodogram[1:floor(nfreq*keep)]
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # Step 2: use GLM with BFGS optimization
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # create 1, x, x^2, ..., x^d
+\end_layout
+
+\begin_layout Plain Layout
+
+        x.mat=rep(1,length(my.freq))
+\end_layout
+
+\begin_layout Plain Layout
+
+        for(col.iter in 1:d){
+\end_layout
+
+\begin_layout Plain Layout
+
+                x.mat=cbind(x.mat,my.freq^col.iter)
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # b0 = rnorm(d + 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # fit the glmnet_exp model
+\end_layout
+
+\begin_layout Plain Layout
+
+        res = glmnet_exp(x.mat, my.periodogram, alpha = alpha)
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        # Step 3: return the estimated variance
+\end_layout
+
+\begin_layout Plain Layout
+
+        return(res[1]/N)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# set random seed
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(20180828)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# number of observations for each simlumation run
+\end_layout
+
+\begin_layout Plain Layout
+
+nobs = 50 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# number of simulation runs
+\end_layout
+
+\begin_layout Plain Layout
+
+n.mcsim = 200
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# mean of the data
+\end_layout
+
+\begin_layout Plain Layout
+
+mu = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# sd of the data
+\end_layout
+
+\begin_layout Plain Layout
+
+StdDev = 2
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# generate data matrix
+\end_layout
+
+\begin_layout Plain Layout
+
+test.mat = matrix(rnorm(nobs * n.mcsim, mean = mu, sd = StdDev), nrow = nobs)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# compute se using glmnet_exp
+\end_layout
+
+\begin_layout Plain Layout
+
+res.glmnet_exp = apply(test.mat, 2, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                       function(x) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                               data.IF = mu.IF(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+                               SE.glmnet_exp(data.IF)
+\end_layout
+
+\begin_layout Plain Layout
+
+                       }
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<Code 2_4_2, tidy=FALSE, eval = TRUE, echo = TRUE, message=F, warning=F,
+ results = 'show'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# comparison of results
+\end_layout
+
+\begin_layout Plain Layout
+
+data.frame(theoretical.se =StdDev/sqrt(nobs), # theoretical SE of mean is
+ StdDev / sqrt(nobs)
+\end_layout
+
+\begin_layout Plain Layout
+
+           mc.se = sd(apply(test.mat, 2, mean)), # SE from Monte Carlo assuming
+ true params are known, which is ot the case in practice
+\end_layout
+
+\begin_layout Plain Layout
+
+           glmnet_exp.se = mean(res.glmnet_exp) # SE estimated by glmnet_exp
+\end_layout
+
+\begin_layout Plain Layout
+
+)
 \end_layout
 
 \begin_layout Plain Layout
