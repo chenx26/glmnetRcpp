@@ -5,6 +5,7 @@
 src/*.o
 src/*.so
 src/*.dll
-.Rproj.user/**
+.Rproj.user/
 vignettes/*~
 vignettes/*#
+.Rproj.user/**/*
