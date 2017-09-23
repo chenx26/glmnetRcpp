@@ -77,7 +77,7 @@ Eigen::VectorXd GlmNetCpp::GradGammaNegativeLogLikelihood(const Eigen::VectorXd&
 }
 
 // function for the prox of L1 regularizer,
-// which is soft-thresholding operator, 
+// which is soft-thresholding operator,
 // this is multi-dimensional
 
 Eigen::VectorXd GlmNetCpp::prox_L1(const Eigen::VectorXd& x, double threshold) {
@@ -129,6 +129,9 @@ Eigen::VectorXd GlmNetCpp::ProxGradDescent(double lambda) {
     double t = 1;
     double beta = 0.5;
 
+    if (rel_tol_ < 0 )
+      return Eigen::VectorXd::Zero(static_cast<int>(predictor_matrix_.cols()));
+
     int num_params = static_cast<int>(predictor_matrix_.cols());
 
     Eigen::VectorXd x = Eigen::VectorXd::Zero(num_params);
@@ -146,8 +149,8 @@ Eigen::VectorXd GlmNetCpp::ProxGradDescent(double lambda) {
             Eigen::VectorXd grad_y = GradSmoothObjFun(y);
 
 //            std::cout << "grad_y =" << grad_y << std::endl;
-            
-            double threshold = t * lambda * alpha_ 
+
+            double threshold = t * lambda * alpha_
                                 / (1 + t * lambda * (1 - alpha_));
 
             z = prox_L1(y - t * grad_y, threshold);
@@ -164,7 +167,7 @@ Eigen::VectorXd GlmNetCpp::ProxGradDescent(double lambda) {
 
             double rhs3 = (1 / (2 * t)) * (z - y).squaredNorm();
 //            std::cout << "rhs3 =" << rhs3 << std::endl;
-            //            
+            //
             //            std::cout << (lhs <= rhs1 +rhs2 + rhs3) << std::endl;
 
             if (lhs <=
@@ -183,10 +186,10 @@ Eigen::VectorXd GlmNetCpp::ProxGradDescent(double lambda) {
         }
         xprev = x;
         x = z;
-        
+
         obj_val_prev = obj_val;
         obj_val = ObjFun(x, lambda);
-        
+
         if (k > 1)
             if (fabs(obj_val - obj_val_prev) < abs_tol_)
                 break;
