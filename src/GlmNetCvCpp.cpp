@@ -20,7 +20,8 @@ GlmNetCvCpp::GlmNetCvCpp(const Eigen::MatrixXd& predictor_matrix,
         double abs_tol,
         double rel_tol,
         bool normalize_grad,
-        int k_fold) :
+        int k_fold,
+        bool has_intercept) :
 predictor_matrix_(predictor_matrix),
 response_vector_(response_vector),
 alpha_(alpha),
@@ -30,7 +31,8 @@ max_iter_(max_iter),
 abs_tol_(abs_tol),
 rel_tol_(rel_tol),
 normalize_grad_(normalize_grad),
-k_fold_(k_fold) {
+k_fold_(k_fold),
+has_intercept_(has_intercept)  {
     //    predictor_matrix_ = A;
     //    response_vector_ = b;
     //    alpha_ = alpha;
@@ -89,7 +91,8 @@ Eigen::VectorXd GlmNetCvCpp::FitGlmCv() {
                     max_iter_,
                     abs_tol_,
                     rel_tol_,
-                    normalize_grad_);
+                    normalize_grad_,
+                    has_intercept_);
 
             // find the optimal coefficients using training data
             Eigen::VectorXd training_coeffs = my_glm.ProxGradDescent(lambda_grid(i));
@@ -128,7 +131,8 @@ Eigen::VectorXd GlmNetCvCpp::FitGlmCv() {
                     max_iter_,
                     abs_tol_,
                     rel_tol_,
-                    normalize_grad_);
+                    normalize_grad_,
+                    has_intercept_);
                 Eigen::VectorXd best_coeffs = my_glm.ProxGradDescent(best_lambda);
 
     return best_coeffs;

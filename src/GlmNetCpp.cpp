@@ -12,7 +12,8 @@ GlmNetCpp::GlmNetCpp(const Eigen::MatrixXd& predictor_matrix,
         int max_iter,
         double abs_tol,
         double rel_tol,
-        bool normalize_grad) :
+        bool normalize_grad,
+        bool has_intercept) :
 predictor_matrix_(predictor_matrix),
 response_vector_(response_vector),
 alpha_(alpha),
@@ -20,7 +21,8 @@ glm_type_(glm_type),
 max_iter_(max_iter),
 abs_tol_(abs_tol),
 rel_tol_(rel_tol),
-normalize_grad_(normalize_grad) {
+normalize_grad_(normalize_grad),
+has_intercept_(has_intercept) {
     //    predictor_matrix_ = A;
     //    response_vector_ = b;
     //    alpha_ = alpha;
@@ -81,7 +83,11 @@ Eigen::VectorXd GlmNetCpp::GradGammaNegativeLogLikelihood(const Eigen::VectorXd&
 // this is multi-dimensional
 
 Eigen::VectorXd GlmNetCpp::prox_L1(const Eigen::VectorXd& x, double threshold) {
-    return ((abs(x.array()) - threshold).max(0) * x.array().sign()).matrix();
+  Eigen::VectorXd tmp = ((abs(x.array()) - threshold).max(0) * x.array().sign()).matrix();
+  if (has_intercept_){
+    tmp(0) = x(0);
+  }
+    return tmp;
 }
 
 // function for the L1 regularizer
