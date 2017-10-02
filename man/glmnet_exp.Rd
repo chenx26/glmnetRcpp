@@ -6,7 +6,7 @@
 \usage{
 glmnet_exp(A, b, alpha = 1, num_lambda = 100L, glm_type = 1L,
   max_iter = 100L, abs_tol = 1e-04, rel_tol = 0.01,
-  normalize_grad = FALSE, k_fold = 5L)
+  normalize_grad = FALSE, k_fold = 5L, has_intercept = TRUE)
 }
 \arguments{
 \item{A}{The matrix of independent variables}
