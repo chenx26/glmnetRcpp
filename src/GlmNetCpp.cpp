@@ -92,11 +92,17 @@ Eigen::VectorXd GlmNetCpp::prox_L1(const Eigen::VectorXd& x, double threshold) {
 
 // function for the L1 regularizer
 double GlmNetCpp::regularizer_L1(const Eigen::VectorXd& x){
+  if(has_intercept_){
+    return x.tail(x.size()-1).lpNorm<1>();
+  }
     return x.lpNorm<1>();
 }
 
 // function for the ENet regularizer
 double GlmNetCpp::regularizer_ENet(const Eigen::VectorXd& x){
+  if(has_intercept_){
+    return alpha_ * regularizer_L1(x) + (1 - alpha_) / 2 * x.tail(x.size()-1).squaredNorm();
+  }
     return alpha_ * regularizer_L1(x) + (1 - alpha_) / 2 * x.squaredNorm();
 }
 
