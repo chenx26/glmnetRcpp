@@ -22,15 +22,17 @@ glmnet_exp = function(A,
                       abs_tol = 1.0e-4,
                       rel_tol = 1.0e-2,
                       normalize_grad = FALSE,
-                      k_fold = 5L){
+                      k_fold = 5L,
+                      has_intercept = TRUE){
   return(fitGlmCv(A,
          b,
-         alpha = 1,
-         num_lambda = 100L,
-         glm_type = 1L,
-         max_iter = 100L,
-         abs_tol = 1.0e-4,
-         rel_tol = 1.0e-2,
-         normalize_grad = FALSE,
-         k_fold = 5L))
+         alpha = alpha,
+         num_lambda = num_lambda,
+         glm_type = glm_type,
+         max_iter = max_iter,
+         abs_tol = abs_tol,
+         rel_tol = rel_tol,
+         normalize_grad = normalize_grad,
+         k_fold = k_fold,
+         has_intercept = has_intercept))
 }
