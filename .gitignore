@@ -9,3 +9,4 @@ src/*.dll
 vignettes/*~
 vignettes/*#
 .Rproj.user/**/*
+.DS_Store
