@@ -15,6 +15,7 @@
 #' @export
 glmnet_exp = function(A,
                       b,
+                      ...,
                       alpha = 1,
                       num_lambda = 100L,
                       glm_type = 1L,
