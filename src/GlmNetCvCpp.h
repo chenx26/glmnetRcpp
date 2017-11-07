@@ -30,7 +30,8 @@ public:
             double rel_tol = 1.0e-2,
             bool normalize_grad = false,
             int k_fold = 5,
-            bool has_intercept = true);
+            bool has_intercept = true,
+            int k_fold_iter = 5);
             // function for fitting GLM model given fixed lambda
     Eigen::VectorXd FitGlmFixed();
 
@@ -82,6 +83,9 @@ private:
 
     // whether the inputs contain intercept or not (as the first variable)
     bool has_intercept_;
+
+    // number of iterations for the cross validation
+    int k_fold_iter_;
 
     // struct for the results of the cross validation for each fixed lambda
 //    struct CvResult{

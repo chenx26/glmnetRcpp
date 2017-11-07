@@ -16,7 +16,7 @@
 glmnet_exp = function(A,
                       b,
                       ...,
-                      alpha = 1,
+                      alpha.EN = 0.5,
                       num_lambda = 100L,
                       glm_type = 1L,
                       max_iter = 100L,
@@ -24,10 +24,11 @@ glmnet_exp = function(A,
                       rel_tol = 1.0e-2,
                       normalize_grad = FALSE,
                       k_fold = 5L,
-                      has_intercept = TRUE){
+                      has_intercept = TRUE,
+                      k_fold_iter = 5L){
   return(fitGlmCv(A,
          b,
-         alpha = alpha,
+         alpha = alpha.EN,
          num_lambda = num_lambda,
          glm_type = glm_type,
          max_iter = max_iter,
@@ -35,5 +36,6 @@ glmnet_exp = function(A,
          rel_tol = rel_tol,
          normalize_grad = normalize_grad,
          k_fold = k_fold,
-         has_intercept = has_intercept))
+         has_intercept = has_intercept,
+         k_fold_iter = k_fold_iter))
 }

@@ -74,7 +74,8 @@ Eigen::MatrixXd fitGlmCv(const Eigen::MatrixXd& predictor_matrix,
                             double rel_tol = 1.0e-2,
                             bool normalize_grad = false,
                             int k_fold = 5,
-                            bool has_intercept = true)
+                            bool has_intercept = true,
+                            int k_fold_iter = 5)
 {
     GlmNetCvCpp gnc(predictor_matrix, response_vector,
                     alpha,
@@ -85,7 +86,8 @@ Eigen::MatrixXd fitGlmCv(const Eigen::MatrixXd& predictor_matrix,
                     rel_tol,
                     normalize_grad,
                     k_fold,
-                    has_intercept);
+                    has_intercept,
+                    k_fold_iter);
 
     Eigen::MatrixXd X = gnc.FitGlmCv();
     return X;

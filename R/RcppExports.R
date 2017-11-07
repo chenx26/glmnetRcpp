@@ -13,8 +13,8 @@ fitGlmFixed <- function(predictor_matrix, response_vector, alpha = 1, num_lambda
     .Call('_glmnetRcpp_fitGlmFixed', PACKAGE = 'glmnetRcpp', predictor_matrix, response_vector, alpha, num_lambda, glm_type, max_iter, abs_tol, rel_tol, normalize_grad, k_fold)
 }
 
-fitGlmCv <- function(predictor_matrix, response_vector, alpha = 1, num_lambda = 100L, glm_type = 1L, max_iter = 100L, abs_tol = 1.0e-4, rel_tol = 1.0e-2, normalize_grad = FALSE, k_fold = 5L, has_intercept = TRUE) {
-    .Call('_glmnetRcpp_fitGlmCv', PACKAGE = 'glmnetRcpp', predictor_matrix, response_vector, alpha, num_lambda, glm_type, max_iter, abs_tol, rel_tol, normalize_grad, k_fold, has_intercept)
+fitGlmCv <- function(predictor_matrix, response_vector, alpha = 1, num_lambda = 100L, glm_type = 1L, max_iter = 100L, abs_tol = 1.0e-4, rel_tol = 1.0e-2, normalize_grad = FALSE, k_fold = 5L, has_intercept = TRUE, k_fold_iter = 5L) {
+    .Call('_glmnetRcpp_fitGlmCv', PACKAGE = 'glmnetRcpp', predictor_matrix, response_vector, alpha, num_lambda, glm_type, max_iter, abs_tol, rel_tol, normalize_grad, k_fold, has_intercept, k_fold_iter)
 }
 
 ExpNegativeLogLikelihood_cpp <- function(x, predictor_matrix, response_vector, alpha = 1, num_lambda = 100L, glm_type = 1L, max_iter = 100L, abs_tol = 1.0e-4, rel_tol = 1.0e-2, normalize_grad = FALSE, k_fold = 5L) {

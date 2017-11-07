@@ -21,7 +21,8 @@ GlmNetCvCpp::GlmNetCvCpp(const Eigen::MatrixXd& predictor_matrix,
         double rel_tol,
         bool normalize_grad,
         int k_fold,
-        bool has_intercept) :
+        bool has_intercept,
+        int k_fold_iter) :
 predictor_matrix_(predictor_matrix),
 response_vector_(response_vector),
 alpha_(alpha),
@@ -32,7 +33,8 @@ abs_tol_(abs_tol),
 rel_tol_(rel_tol),
 normalize_grad_(normalize_grad),
 k_fold_(k_fold),
-has_intercept_(has_intercept)  {
+has_intercept_(has_intercept),
+k_fold_iter_(k_fold_iter) {
     //    predictor_matrix_ = A;
     //    response_vector_ = b;
     //    alpha_ = alpha;
@@ -71,7 +73,7 @@ Eigen::VectorXd GlmNetCvCpp::FitGlmCv() {
         double error = 0;
 
         // run k_fold cv
-        for (int cv_iter = 0; cv_iter < k_fold_; cv_iter++) {
+        for (int cv_iter = 0; cv_iter < k_fold_iter_; cv_iter++) {
             //  generate training and testing data sets
             Eigen::MatrixXd predictor_matrix_train;
             Eigen::VectorXd response_vector_train;
@@ -107,7 +109,7 @@ Eigen::VectorXd GlmNetCvCpp::FitGlmCv() {
 
         }
 
-        error = error / k_fold_;
+        error = error / k_fold_iter_;
 
         // save the results
         predicted_errors.push_back(error);
